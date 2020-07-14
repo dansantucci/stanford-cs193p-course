@@ -21,7 +21,8 @@ struct ContentView: View {
         }
         .padding()
         .foregroundColor(Color.orange)
-        .font(Font.largeTitle)
+//      Assignment 1 - Set smaller font when the game has 5 or more pairs
+        .font(viewModel.cards.count > 4 ? Font.headline : Font.largeTitle)
         
     }
 }
@@ -39,14 +40,16 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: 10.0).fill()
             }
         }
+//      Assignment 1 - Force 2:3 aspect ratio
+        .frame(width: 108, height: 72, alignment: .center)
     }
 }
 
-//
-//struct ContentView_Previews: PreviewProvider {
-//   static var previews: some View {
-//         ContentView(viewModel: EmojiMemoryGame)
-//            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
-//            .previewDisplayName("iPhone SE")
-//   }
-//}
+
+struct ContentView_Previews: PreviewProvider {
+   static var previews: some View {
+         ContentView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+            .previewDisplayName("iPhone SE")
+   }
+}
