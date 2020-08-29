@@ -35,34 +35,29 @@ struct CardView: View {
         })
     }
     
+    @ViewBuilder
     func body(for size: CGSize) -> some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
+        if card.isFaceUp || !card.isMatched {
+            ZStack {
+                Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(110-90), clockwise: true)
+                .padding(5).opacity(0.4)
                 Text(card.content)
-            } else {
-                if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
-                }
             }
+            //      Assignment 1 - Force 2:3 aspect ratio
+            .frame(width: 108, height: 72, alignment: .center)
+            //      Assignment 1 - Set smaller font when the game has 5 or more pairs
+            .font(Font.system(size: fontSize(for: size)))
+            .cardify(isFaceUp: card.isFaceUp)
         }
-        //      Assignment 1 - Force 2:3 aspect ratio
-        .frame(width: 108, height: 72, alignment: .center)
-        //      Assignment 1 - Set smaller font when the game has 5 or more pairs
-        .font(Font.system(size: fontSize(for: size)))
     }
     
     
 //    MARK: - Drawing Constants
-    let cornerRadius: CGFloat = 10
-    let edgeLineWidth: CGFloat = 3
     func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * 0.75
     }
     
 }
-
 
 struct ContentView_Previews: PreviewProvider {
    static var previews: some View {
